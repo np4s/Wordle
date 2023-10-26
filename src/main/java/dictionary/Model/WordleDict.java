@@ -8,14 +8,18 @@ import java.util.List;
 
 public class WordleDict {
     private String targetWord;
-    public List<String> wordList;
+    private List<String> wordList;
+    private List<String> targetList;
 
     public WordleDict() {
         wordList = readStringListFromFile("src/main/resources/words.txt");
-        targetWord = "hello";
+        targetList = readStringListFromFile("src/main/resources/target-words.txt");
+        int targetIndex = (int) Math.floor(Math.random() * (targetList.size() - 1) + 1);
+        targetWord = targetList.get(targetIndex);
+        System.out.println(targetWord);
     }
 
-    public List<String> readStringListFromFile(String filePath) {
+    private List<String> readStringListFromFile(String filePath) {
         try {
             return Files.readAllLines(Paths.get(filePath));
         } catch (IOException e) {
@@ -26,5 +30,19 @@ public class WordleDict {
 
     public String getTargetWord() {
         return targetWord;
+    }
+
+    public boolean isValid(String guessWord) {
+        for (String word : wordList) {
+            if (word.equals(guessWord)) {
+                return true;
+            }
+        }
+        for (String word : targetList) {
+            if (word.equals(guessWord)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

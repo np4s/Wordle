@@ -91,7 +91,7 @@
     -fx-background-radius: 4px;
 }
 
-.keyboardCorrectColor {
+.correct-keyboard {
     -fx-background-color: -correct-color;
     -fx-text-fill: white;
     -fx-font-size: 13px;
@@ -103,8 +103,20 @@
     -fx-background-radius: 4px;
 }
 
-.keyboardPresentColor {
+.present-keyboard {
     -fx-background-color: -present-color;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-min-width: 43px;
+    -fx-min-height: 58px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-radius: 4px;
+}
+
+.wrong-keyboard {
+    -fx-background-color: -wrong-color;
     -fx-text-fill: white;
     -fx-font-size: 13px;
     -fx-font-weight: bold;

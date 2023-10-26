@@ -35,6 +35,9 @@ public class Wordle {
     private final String[] secondRowKeys = { "A", "S", "D", "F", "G", "H", "J", "K", "L" };
     private final String[] thirdRowKeys = { "Z", "X", "C", "V", "B", "N", "M" };
 
+    private final String[] tiles = { "wrong-letter", "present-letter", "correct-letter" };
+    private final String[] keyboards = { "wrong-keyboard", "present-keyboard", "correct-keyboard" };
+
     private final int MAX_ROW = 5;
     private final int MAX_COLUMN = 4;
 
@@ -82,6 +85,18 @@ public class Wordle {
         for (Node child : gridPane.getChildren()) {
             if (GridPane.getRowIndex(child) == row && GridPane.getColumnIndex(child) == column) {
                 return (Label) child;
+            }
+        }
+        return null;
+    }
+
+    private Label getLabel(GridPane gridPane, String letter) {
+        for (Node child : gridPane.getChildren()) {
+            if (child instanceof Label) {
+                Label label = (Label) child;
+                if (letter.equalsIgnoreCase(label.getText())) {
+                    return label;
+                }
             }
         }
         return null;
@@ -156,8 +171,13 @@ public class Wordle {
     }
 
     public void onEnterPressed(GridPane gridPane, GridPane firstRowKeyboard,
-            GridPane secondRowKeyboard, GridPane thirdRowKeyboard, int[] state) {
+            GridPane secondRowKeyboard, GridPane thirdRowKeyboard, int[] state, String guessWord) {
         changeRowColor(gridPane, state);
+        for (int i = 0; i <= MAX_COLUMN; i++) {
+            changeKeyboarColor(firstRowKeyboard, secondRowKeyboard, thirdRowKeyboard,
+                    String.valueOf(guessWord.charAt(i)), state[i]);
+        }
+
         if (currentRow < MAX_ROW) {
             System.out.println("test test");
             currentRow++;
@@ -166,11 +186,47 @@ public class Wordle {
     }
 
     private void changeRowColor(GridPane gridPane, int[] state) {
-        String[] tiles = { "wrong-letter", "present-letter", "correct-letter" };
         for (int i = 0; i <= MAX_COLUMN; i++) {
             Label label = getLabel(gridPane, currentRow, currentColumn);
             setLabelStyleClass(gridPane, currentRow, i, tiles[state[i]]);
         }
+    }
+
+    private void changeKeyboarColor(GridPane firstRowKeyboard,
+            GridPane secondRowKeyboard, GridPane thirdRowKeyboard, String letter, int newStyleId) {
+        Label label;
+        String newStyle = keyboards[newStyleId];
+
+        if (contains(firstRowKeys, letter)) {
+            label = getLabel(firstRowKeyboard, letter);
+        } else if (contains(secondRowKeys, letter)) {
+            label = getLabel(secondRowKeyboard, letter);
+        } else {
+            label = getLabel(thirdRowKeyboard, letter);
+        }
+
+        if (label == null) {
+            return;
+        }
+
+        String currentStyle = label.getStyleClass().toString();
+        if (currentStyle.equals(keyboards[2])) {
+            return;
+        }
+        if (currentStyle.equals(keyboards[1]) && newStyle.equals(keyboards[0])) {
+            return;
+        }
+        label.getStyleClass().clear();
+        label.getStyleClass().add(newStyle);
+    }
+
+    private boolean contains(String[] keyboard, String letter) {
+        for (String keyChar : keyboard) {
+            if (keyChar.equalsIgnoreCase(letter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void playScaleEffect(Label label) {

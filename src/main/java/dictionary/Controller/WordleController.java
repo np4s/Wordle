@@ -49,11 +49,12 @@ public class WordleController implements Initializable {
             wordle.onBackspacePressed(guessBoard);
         } else if (keyEvent.getCode().isLetterKey()) {
             wordle.onLetterPressed(guessBoard, keyEvent);
-        }
-        else if (keyEvent.getCode() == KeyCode.ENTER && wordle.checkEnterPressed(guessBoard)) {
+        } else if (keyEvent.getCode() == KeyCode.ENTER && wordle.checkEnterPressed(guessBoard)) {
             String guessWord = wordle.getRowText(guessBoard);
-            wordle.onEnterPressed(guessBoard, firstRowKeyboard, secondRowKeyboard,
-                    thirdRowKeyboard, getState(guessWord));
+            if (wordleDict.isValid(guessWord)) {
+                wordle.onEnterPressed(guessBoard, firstRowKeyboard, secondRowKeyboard,
+                        thirdRowKeyboard, getState(guessWord), guessWord);
+            }
         }
     }
 
