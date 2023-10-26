@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="500.0" styleClass="main-screen" stylesheets="@Wordle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dictionary.Controller.WordleController">
+   <children>
+      <GridPane fx:id="guessBoard" alignment="CENTER" hgap="5" vgap="5" AnchorPane.topAnchor="15.0">
+      </GridPane>
+      <VBox layoutX="14.0" layoutY="470.0" prefHeight="235.0" prefWidth="474.0">
+         <children>
+            <GridPane fx:id="firstRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </GridPane>
+            <GridPane fx:id="secondRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0" />
+            <GridPane fx:id="thirdRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </GridPane>
+         </children>
+      </VBox>
+
+   </children>
+</AnchorPane>

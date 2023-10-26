@@ -1,0 +1,4 @@
+dictionary\Controller\Wordle.class
+dictionary\Model\WordleDict.class
+dictionary\Controller\WordleController.class
+dictionary\Main.class
