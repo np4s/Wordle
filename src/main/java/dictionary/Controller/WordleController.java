@@ -13,6 +13,9 @@ import javafx.scene.control.*;
 
 public class WordleController implements Initializable {
 
+    private static final int MAX_ROW = 5;
+    private static final int MAX_COLUMN = 4;
+
     @FXML
     public GridPane guessBoard;
     @FXML
@@ -21,32 +24,67 @@ public class WordleController implements Initializable {
     public GridPane secondRowKeyboard;
     @FXML
     public GridPane thirdRowKeyboard;
+    @FXML
+    public Button retryButton;
 
     Wordle wordle;
     WordleDict wordleDict;
+    WordleResult wordleResult;
 
-    private static final int MAX_ROW = 5;
-    private static final int MAX_COLUMN = 4;
+    private boolean isEnd;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         wordle = new Wordle(guessBoard, firstRowKeyboard, secondRowKeyboard, thirdRowKeyboard);
         wordleDict = new WordleDict();
+        wordleResult = new WordleResult();
+        retryButton.setOnMouseClicked(e -> restart());
         guessBoard.setOnKeyPressed(e -> onKeyPressed(e));
         guessBoard.requestFocus();
+        isEnd = false;
+    }
+
+    public void restart() {
+        wordle.reset(guessBoard, firstRowKeyboard, secondRowKeyboard, thirdRowKeyboard);
+        wordleDict.randomTargetWord();
+        WordleResult.resetGame = false;
+        isEnd = false;
     }
 
     @FXML
     public void onKeyPressed(KeyEvent keyEvent) {
         // System.out.println("called");
+        if (isEnd) {
+            return;
+        }
+
         if (keyEvent.getCode() == KeyCode.BACK_SPACE) {
+
             wordle.onBackspacePressed(guessBoard);
+
         } else if (keyEvent.getCode().isLetterKey()) {
+
             wordle.onLetterPressed(guessBoard, keyEvent);
+
         } else if (keyEvent.getCode() == KeyCode.ENTER && wordle.checkEnterPressed(guessBoard)) {
+
             String guessWord = wordle.getRowText(guessBoard);
             if (wordleDict.isValid(guessWord)) {
                 wordle.onEnterPressed(guessBoard, firstRowKeyboard, secondRowKeyboard,
                         thirdRowKeyboard, getState(guessWord), guessWord);
+
+                if (foundWord(guessWord) || wordle.endOfBoard()) {
+                    isEnd = true;
+                    
+                    if (foundWord(guessWord)) {
+                        wordleResult.display("YOU WIN!", guessWord);
+                    } else {
+                        wordleResult.display("YOU LOSE!", guessWord);
+                    }
+
+                    if (WordleResult.resetGame == true) {
+                        restart();
+                    }
+                }
             }
         }
     }
@@ -61,6 +99,9 @@ public class WordleController implements Initializable {
             }
         }
         for (int i = 0; i <= MAX_COLUMN; i++) {
+            if (state[i] == 2) {
+                continue;
+            }
             for (int j = 0; j <= MAX_COLUMN; j++) {
                 if (state[j] != 2 && guessWord.charAt(i) == targetWord.charAt(j)) {
                     state[i] = 1;
@@ -68,5 +109,9 @@ public class WordleController implements Initializable {
             }
         }
         return state;
+    }
+
+    private boolean foundWord(String guessWord) {
+        return guessWord.equals(wordleDict.getTargetWord());
     }
 }

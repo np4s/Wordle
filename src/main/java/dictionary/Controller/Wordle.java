@@ -31,18 +31,6 @@ public class Wordle {
         initKeyboard(firstRowKeyboard, secondRowKeyboard, thirdRowKeyboard);
     }
 
-    private void initGridPane(GridPane gridPane) {
-        for (int i = 0; i <= MAX_ROW; i++) {
-            for (int j = 0; j <= MAX_COLUMN; j++) {
-                Label label = new Label();
-                label.getStyleClass().add("default-tile");
-                gridPane.add(label, j, i);
-            }
-        }
-        currentRow = 0;
-        currentColumn = 0;
-    }
-
     private void initKeyboard(GridPane firstRowKeyboard,
             GridPane secondRowKeyboard, GridPane thirdRowKeyboard) {
         for (int i = 0; i < firstRowKeys.length; i++) {
@@ -60,6 +48,66 @@ public class Wordle {
             label.getStyleClass().add("keyboardTile");
             thirdRowKeyboard.add(label, i, 2);
         }
+    }
+
+    public void reset(GridPane gridPane, GridPane firstRowKeyboard,
+            GridPane secondRowKeyboard, GridPane thirdRowKeyboard) {
+
+        Label label;
+        for (Node child : gridPane.getChildren())
+            if (child instanceof Label) {
+                label = (Label) child;
+                label.getStyleClass().clear();
+                label.setText("");
+                label.getStyleClass().add("default-tile");
+            }
+
+        for (Node child : firstRowKeyboard.getChildren())
+            if (child instanceof Label) {
+                label = (Label) child;
+                label.getStyleClass().clear();
+                label.getStyleClass().add("keyboardTile");
+            }
+        for (Node child : secondRowKeyboard.getChildren())
+            if (child instanceof Label) {
+                label = (Label) child;
+                label.getStyleClass().clear();
+                label.getStyleClass().add("keyboardTile");
+            }
+        for (Node child : thirdRowKeyboard.getChildren())
+            if (child instanceof Label) {
+                label = (Label) child;
+                label.getStyleClass().clear();
+                label.getStyleClass().add("keyboardTile");
+            }
+
+        currentColumn = 0;
+        currentRow = 0;
+    }
+
+    private void initGridPane(GridPane gridPane) {
+        for (int i = 0; i <= MAX_ROW; i++) {
+            for (int j = 0; j <= MAX_COLUMN; j++) {
+                Label label = new Label();
+                label.getStyleClass().add("default-tile");
+                gridPane.add(label, j, i);
+            }
+        }
+        currentRow = 0;
+        currentColumn = 0;
+    }
+
+    public boolean endOfBoard() {
+        return currentColumn == MAX_COLUMN && currentRow == MAX_ROW;
+    }
+
+    private boolean contains(String[] keyboard, String letter) {
+        for (String keyChar : keyboard) {
+            if (keyChar.equalsIgnoreCase(letter)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Label getLabel(GridPane gridPane, final int row, final int column) {
@@ -160,7 +208,6 @@ public class Wordle {
         }
 
         if (currentRow < MAX_ROW) {
-            System.out.println("test test");
             currentRow++;
             currentColumn = 0;
         }
@@ -168,7 +215,6 @@ public class Wordle {
 
     private void changeRowColor(GridPane gridPane, int[] state) {
         for (int i = 0; i <= MAX_COLUMN; i++) {
-            Label label = getLabel(gridPane, currentRow, currentColumn);
             setLabelStyleClass(gridPane, currentRow, i, tiles[state[i]]);
         }
     }
@@ -199,15 +245,6 @@ public class Wordle {
         }
         label.getStyleClass().clear();
         label.getStyleClass().add(newStyle);
-    }
-
-    private boolean contains(String[] keyboard, String letter) {
-        for (String keyChar : keyboard) {
-            if (keyChar.equalsIgnoreCase(letter)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void playScaleEffect(Label label) {

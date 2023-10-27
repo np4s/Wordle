@@ -13,9 +13,7 @@ public class WordleDict {
     public WordleDict() {
         wordList = readStringListFromFile("src/main/resources/words.txt");
         targetList = readStringListFromFile("src/main/resources/target-words.txt");
-        int targetIndex = (int) Math.floor(Math.random() * (targetList.size() - 1) + 1);
-        targetWord = targetList.get(targetIndex);
-        System.out.println(targetWord);
+        randomTargetWord();
     }
 
     private List<String> readStringListFromFile(String filePath) {
@@ -25,6 +23,12 @@ public class WordleDict {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void randomTargetWord() {
+        int targetIndex = (int) Math.floor(Math.random() * (targetList.size() - 1) + 1);
+        targetWord = targetList.get(targetIndex);
+        System.out.println(targetWord);
     }
 
     public String getTargetWord() {

@@ -2,27 +2,40 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="500.0" styleClass="main-screen" stylesheets="@Wordle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dictionary.Controller.WordleController">
    <children>
-      <GridPane fx:id="guessBoard" alignment="CENTER" hgap="5" vgap="5" AnchorPane.topAnchor="15.0">
-      </GridPane>
-      <VBox layoutX="14.0" layoutY="470.0" prefHeight="235.0" prefWidth="474.0">
+      <VBox prefHeight="715.0" prefWidth="500.0">
          <children>
-            <GridPane fx:id="firstRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </GridPane>
-            <GridPane fx:id="secondRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0" />
-            <GridPane fx:id="thirdRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </GridPane>
+            <Pane prefHeight="58.0" prefWidth="494.0">
+               <children>
+                  <Button fx:id="retryButton" focusTraversable="false" layoutX="426.0" layoutY="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="48.0" text="Retry" />
+               </children>
+            </Pane>
+            <GridPane fx:id="guessBoard" alignment="CENTER" hgap="5" vgap="5">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></GridPane>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="214.0" prefWidth="474.0">
+               <children>
+                  <GridPane fx:id="firstRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </GridPane>
+                  <GridPane fx:id="secondRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0" />
+                  <GridPane fx:id="thirdRowKeyboard" alignment="BOTTOM_CENTER" hgap="4.0" vgap="2.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </VBox>
          </children>
       </VBox>
 
