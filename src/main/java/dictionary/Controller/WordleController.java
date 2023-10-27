@@ -76,9 +76,9 @@ public class WordleController implements Initializable {
                     isEnd = true;
                     
                     if (foundWord(guessWord)) {
-                        wordleResult.display("YOU WIN!", guessWord);
+                        wordleResult.display("You won!", guessWord);
                     } else {
-                        wordleResult.display("YOU LOSE!", guessWord);
+                        wordleResult.display("You lost!", guessWord);
                     }
 
                     if (WordleResult.resetGame == true) {

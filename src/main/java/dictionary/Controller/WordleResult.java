@@ -27,14 +27,14 @@ public class WordleResult {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UTILITY);
-            stage.setMaxWidth(500);
-            stage.setMaxHeight(460);
+            stage.setMaxWidth(440);
+            stage.setMaxHeight(400);
 
             VBox root = new VBox(15);
             root.setAlignment(Pos.CENTER);
 
             Label mainLabel = new Label();
-            mainLabel.setText("           You won! \n The winning word was");
+            mainLabel.setText("    " + result + " \n The word was");
             mainLabel.getStyleClass().setAll("lead", "big-font");
 
             Label targetWordLabel = new Label(targetWord.toUpperCase());
